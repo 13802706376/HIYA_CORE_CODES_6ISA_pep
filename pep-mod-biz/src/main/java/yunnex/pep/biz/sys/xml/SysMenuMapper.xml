@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysMenuMapper">
+
+    <sql id="menuColumns">
+        a.id,
+        a.parent_id,
+        <!-- a.parent_id AS "parent.id", -->
+        a.parent_ids,
+        a.name,
+        a.href,
+        a.target,
+        a.icon,
+        a.sort,
+        a.is_show,
+        a.permission,
+        a.type ,
+        a.remarks,
+        a.created_by ,
+        a.created_date,
+        a.last_modified_by ,
+        a.last_modified_date,
+        a.del_flag
+        <!-- p.name AS "parent.name" -->
+    </sql>
+
+
+    <select id="findByParentIdsLike" resultType="yunnex.pep.biz.sys.entity.SysMenu">
+		SELECT
+			a.id,
+			a.parent_id AS "parentId",
+			a.parent_ids
+		FROM sys_menu a
+		WHERE a.del_flag = 'N' AND a.parent_ids LIKE #{parentIds}
+		ORDER BY a.sort
+	</select>
+
+    <update id="updateParentIds">
+		UPDATE sys_menu SET 
+			parent_id = #{parentId}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+
+    <select id="findAllList" resultType="yunnex.pep.biz.sys.dto.SysMenuDto">
+        SELECT
+        <include refid="menuColumns"/>
+        FROM sys_menu a
+        WHERE a.del_flag = 'N'
+        ORDER BY a.sort
+    </select>
+
+    <select id="getMenuInfoById" resultType="yunnex.pep.biz.sys.dto.SysMenuDto">
+        SELECT
+        a.parent_id AS "parent.id",
+        p.name AS "parent.name",
+        p.parent_id AS "parent.parentId",
+        p.parent_ids AS "parent.parentIds",
+        <include refid="menuColumns"/>
+        FROM sys_menu a
+        LEFT JOIN sys_menu p ON p.id = a.parent_id
+        WHERE a.id = #{id} AND a.del_flag = 'N'
+    </select>
+
+    <update id="deleteMenuInfoById">
+		UPDATE sys_menu SET 
+			del_flag =  'Y'
+		WHERE id = #{id} OR parent_ids LIKE CONCAT('%,', #{id}, ',%')
+	</update>
+
+    <select id="findRoleMenus" resultType="sysMenuDto">
+        SELECT
+            <include refid="menuColumns"/>
+        FROM
+            sys_menu a
+        WHERE
+            a.del_flag = 'N'
+        <if test="menuShowFlag != null and menuShowFlag != ''">
+            AND a.is_show = #{menuShowFlag}
+        </if>
+        <if test="roles != null and roles.size > 0">
+            AND a.id IN (SELECT menu_id FROM sys_role_menu WHERE role_id IN
+            <foreach collection="roles" item="role" open="(" separator="," close=")">
+                ${role.id}
+            </foreach>
+            AND del_flag = 'N')
+        </if>
+        <if test="isSort">
+            ORDER BY a.sort
+        </if>
+    </select>
+</mapper>

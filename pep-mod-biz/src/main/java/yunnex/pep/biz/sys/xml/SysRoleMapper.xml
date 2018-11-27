@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysRoleMapper">
+
+    <sql id="sysRoleColumns">
+        sr.id,
+        sr.created_by,
+        sr.created_date,
+        sr.last_modified_by,
+        sr.last_modified_date,
+        sr.remarks,
+        sr.del_flag,
+        sr.name,
+        sr.enname,
+        sr.role_explain,
+        sr.data_scope
+    </sql>
+    
+    
+    <select id="getRolePage"  resultType="yunnex.pep.biz.sys.dto.SysRolePageRespDto">
+    SELECT 
+    <include refid="sysRoleColumns"/>
+     FROM  sys_role   sr
+     WHERE sr.del_flag='N' 
+    <if test="roleName !=null and '' != roleName">
+    AND sr.name LIKE  CONCAT('%', #{roleName}, '%')
+    </if>
+    
+    </select>
+    
+
+    <select id="findUserRoles" resultType="sysRoleDto">
+        SELECT
+            <include refid="sysRoleColumns"/>
+        FROM
+            sys_user_role sur
+        INNER JOIN sys_role sr ON sur.user_id = #{userId}
+        AND sur.role_id = sr.id AND sur.del_flag = 'N' AND sr.del_flag = 'N'
+    </select>
+
+</mapper>

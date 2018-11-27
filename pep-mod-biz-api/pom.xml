@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>yunnex.pep</groupId>
+        <artifactId>pep</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>pep-mod-biz-api</artifactId>
+
+    <!-- dubbo项目版本管理，有2种方法：
+    1 没改代码，但是升了版本号，pep-mod-facade-api 的1.0.0和1.0.1代码是一样的, 也就是外围系统一直用1.0.0也是没问题的
+    2 可以parent升级了1.0.1，但是module里的pep-mod-facade-api 依旧是1.0.0，指定不同版本号 -->
+
+    <dependencies>
+        <dependency>
+            <groupId>yunnex.pep</groupId>
+            <artifactId>pep-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

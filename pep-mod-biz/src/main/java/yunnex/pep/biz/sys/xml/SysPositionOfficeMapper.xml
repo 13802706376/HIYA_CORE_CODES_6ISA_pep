@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysPositionOfficeMapper">
+
+    <sql id="sysPositionOfficeColumns">
+        spo.id,
+        spo.created_by,
+        spo.created_date,
+        spo.last_modified_by,
+        spo.last_modified_date,
+        spo.remarks,
+        spo.del_flag,
+        spo.position_id,
+        spo.office_id
+    </sql>
+
+     <insert id="addBatchPositionOfficeInfo">
+        insert into sys_position_office 
+        (id,
+         position_id, 
+         created_by,
+         created_date,
+         last_modified_by,
+         last_modified_date,
+         office_id)
+        values
+        <foreach collection="officeIdList" item="item"
+            index="index" separator=",">
+        (
+       ${@com.baomidou.mybatisplus.core.toolkit.IdWorker@getIdStr()},
+        #{sysPosition.id},
+        #{sysPosition.createdBy},
+        #{sysPosition.createdDate},
+        #{sysPosition.lastModifiedBy},
+        #{sysPosition.lastModifiedDate},
+        #{item}
+        )
+        </foreach>
+    </insert>
+
+
+</mapper>

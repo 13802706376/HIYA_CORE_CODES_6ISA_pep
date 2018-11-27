@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysPositionMapper">
+
+    <sql id="sysPositionColumns">
+        sp.id,
+        sp.del_flag,
+        sp.created_by,
+        sp.created_date,
+        sp.last_modified_by,
+        sp.last_modified_date,
+        sp.remarks,
+        sp.position_name,
+        sp.position_category,
+        sp.professional_level,
+        sp.manage_level,
+        sp.work_duty,
+        sp.work_require,
+        sp.professional_channel,
+        sp.professional_weal_pic,
+        sp.manage_channel,
+        sp.manage_weal_pic,
+        sp.use_office,
+        sp.interview_template_flag
+    </sql>
+	<select id="getPositionPage"  resultType="yunnex.pep.biz.sys.dto.SysPositionPageRespDto">
+	SELECT GROUP_CONCAT(pof.office_id) AS officeIds,<![CDATA[po.*]]>  FROM sys_position po
+	LEFT JOIN sys_position_office pof  ON po.id= pof.position_id
+	WHERE po.del_flag='N' AND pof.del_flag='N'
+	<if test="positionName  !=null and '' != positionName">
+	AND po.position_name LIKE CONCAT('%', #{positionName}, '%')
+	</if>
+	<if test="positionCategory  !=null and '' != positionCategory">
+	AND po.position_category = #{positionCategory}
+	</if>
+	<if test="interviewTemplateFlag !=null and '' != interviewTemplateFlag">
+	AND po.interview_template_flag =  #{interviewTemplateFlag}
+	</if>
+	<if test="officeIdList != null and officeIdList.size > 0">
+	AND pof.office_id in 
+		<foreach item="positionIdItem" collection="officeIdList" separator="," open="(" close=")" >
+			#{positionIdItem}
+		</foreach>
+	</if>
+	GROUP BY pof.position_id
+	</select>
+
+</mapper>

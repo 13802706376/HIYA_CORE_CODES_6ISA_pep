@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 适配公司的应用启动入口，调用main方法启动本应用 -->
+    <bean id="sysProps" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass">
+            <value>yunnex.pep.biz.BizApplication</value>
+        </property>
+        <property name="targetMethod">
+            <value>main</value>
+        </property>
+    </bean>
+</beans>

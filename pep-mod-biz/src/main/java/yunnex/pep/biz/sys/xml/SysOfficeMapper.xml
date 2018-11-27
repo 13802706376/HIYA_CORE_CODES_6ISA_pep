@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysOfficeMapper">
+
+    <sql id="sysOfficeColumns">
+        so.id,
+        so.created_by,
+        so.created_date,
+        so.last_modified_by,
+        so.remarks,
+        so.last_modified_date,
+        so.del_flag,
+        so.parent_id,
+        so.parent_ids,
+        so.name,
+        so.sort,
+        so.area_id,
+        so.code,
+        so.type,
+        so.grade,
+        so.ldap_dn,
+        so.use_able,
+        so.user_count
+    </sql>
+	
+	<select id="findAllOffice" resultType="yunnex.pep.biz.sys.dto.SysOfficeDto">
+	SELECT 
+	<include refid="sysOfficeColumns"/>
+	 FROM  sys_office  so WHERE  so.del_flag ='N' AND  so.use_able = 'Y'
+	</select>
+
+
+
+</mapper>

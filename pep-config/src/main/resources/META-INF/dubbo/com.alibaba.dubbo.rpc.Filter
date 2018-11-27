@@ -1,0 +1,3 @@
+# dubbo filters
+userFilter = yunnex.pep.config.dubbo.UserFilter
+exFilter = yunnex.pep.config.dubbo.ExceptionFilter

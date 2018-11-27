@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysRoleMenuMapper">
+
+    <sql id="sysRoleMenuColumns">
+        srm.id,
+        srm.created_by,
+        srm.created_date,
+        srm.last_modified_by,
+        srm.last_modified_date,
+        srm.remarks,
+        srm.del_flag,
+        srm.role_id,
+        srm.menu_id
+    </sql>
+
+    <insert id="addBatchRoleMenuInfo">
+        insert into sys_role_menu 
+        (id,
+         role_id, 
+         created_by,
+         created_date,
+         last_modified_by,
+         last_modified_date,
+         menu_id)
+        values
+        <foreach collection="menuIdList" item="item"
+            index="index" separator=",">
+        (
+       ${@com.baomidou.mybatisplus.core.toolkit.IdWorker@getIdStr()},
+        #{sysRole.id},
+        #{sysRole.createdBy},
+        #{sysRole.createdDate},
+        #{sysRole.lastModifiedBy},
+        #{sysRole.lastModifiedDate},
+        #{item}
+        )
+        </foreach>
+    </insert>
+
+
+</mapper>

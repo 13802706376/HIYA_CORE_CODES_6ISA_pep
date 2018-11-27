@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysUserMapper">
+
+    <sql id="sysUserColumns">
+        su.id,
+        su.created_by,
+        su.created_date,
+        su.last_modified_by,
+        su.last_modified_date,
+        su.remarks,
+        su.del_flag,
+        su.login_name,
+        su.password,
+        su.salt,
+        su.name,
+        su.email,
+        su.phone,
+        su.avatar,
+        su.lock_flag,
+        su.last_logined_ip,
+        su.last_logined_date
+    </sql>
+
+</mapper>

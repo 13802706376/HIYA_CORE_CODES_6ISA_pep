@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+yunnex.pep.config.autoconfigure.AppAutoConfiguration,\
+yunnex.pep.config.autoconfigure.WebAppAutoConfiguration
+org.springframework.context.ApplicationContextInitializer=\
+yunnex.pep.config.autoconfigure.ApolloInitializer

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysOfficeUserMapper">
+
+    <sql id="sysOfficeUserColumns">
+        sou.id,
+        sou.created_by,
+        sou.created_date,
+        sou.last_modified_by,
+        sou.last_modified_date,
+        sou.remarks,
+        sou.del_flag,
+        sou.user_id,
+        sou.office_id
+    </sql>
+
+    <update id="updateOfficeUserCount">
+	    UPDATE sys_office  so
+		RIGHT JOIN  (
+		SELECT a.* FROM  (
+		SELECT office_id, COUNT(office_id) AS 'userCount' FROM sys_office_user  WHERE del_flag='N'
+		GROUP BY office_id ) a ) sl
+		ON  so.id=sl.office_id
+		SET  so.user_count = sl.userCount
+    </update>
+
+
+</mapper>

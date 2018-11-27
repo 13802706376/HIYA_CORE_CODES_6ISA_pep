@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysLogMapper">
+
+    <sql id="sysLogColumns">
+        sl.id,
+        sl.created_by,
+        sl.created_date,
+        sl.last_modified_by,
+        sl.last_modified_date,
+        sl.remarks,
+        sl.del_flag,
+        sl.user_id,
+        sl.title,
+        sl.method,
+        sl.method_params,
+        sl.http_method,
+        sl.request_uri,
+        sl.query_params,
+        sl.user_agent,
+        sl.ip,
+        sl.cost,
+        sl.ex_flag,
+        sl.exception
+    </sql>
+
+    <select id="list" resultType="sysLogPageRespDto">
+        select
+            <include refid="sysLogColumns"/>, su.name as username
+        from
+            sys_log sl left join sys_user su on sl.user_id = su.id and su.del_flag = 'N'
+        where
+            sl.del_flag = 'N'
+        <if test="title != null and title != ''">
+            and sl.title like "%"#{title}"%"
+        </if>
+        <if test="requestUri != null and requestUri != ''">
+            and sl.request_uri like "%"#{requestUri}"%"
+        </if>
+        <if test="ip != null and ip != ''">
+            and sl.ip like "%"#{ip}"%"
+        </if>
+        <if test="exFlag != null and exFlag != ''">
+            and sl.ex_flag = #{exFlag}
+        </if>
+        <if test="username != null and username != ''">
+            and su.name like "%"#{username}"%"
+        </if>
+        order by
+            sl.last_modified_date desc
+    </select>
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yunnex.pep.biz.sys.mapper.SysDictMapper">
+
+    <sql id="sysDictColumns">
+        sd.id,
+        sd.created_by,
+        sd.created_date,
+        sd.last_modified_by,
+        sd.last_modified_date,
+        sd.remarks,
+        sd.del_flag,
+        sd.type,
+        sd.name,
+        sd.value,
+        sd.description
+    </sql>
+    
+    
+    <select id="findTypes" resultType="string">
+        select distinct type from sys_dict order by type
+    </select>
+
+</mapper>
